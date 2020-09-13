@@ -1,0 +1,100 @@
+<section id="container">
+    <header class="header black-bg">
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" routerLink="/dashboard">
+                        <span class="pe-7s-gleam bounce-in"></span>
+                        <h1>BUDGET GURU</h1>
+                    </a>
+                </div>
+                <div class="user-pic" *ngIf="authService.userData as user">
+                    <div class="dropdown">
+                        <span>
+                            <img class="align-self-start mr-5 img-thumbnail rounded-circle" width="45px" height="45px"
+                                src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+                                alt="{{user.displayName}}">
+                        </span>
+                        <div class="dropdown-content">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a routerLink="/user-profile">Profile</a></li>
+                                <li><a class="pointer-link" (click)="authService.SignOut()">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <body>
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                
+                <ul class="sidebar-menu" id="nav-accordion">
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showSaveDetailsPage()">
+                            <i class="fas fa-save"></i>Save Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showDetailsPage()">
+                            <i class="fas fa-table"></i>Show Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showBillsPage()">
+                            <i class="fas fa-save"></i>Save Bills
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showAnalysisPage()">
+                            <i class="fa fa-bar-chart-o"></i>Yearly Analysis
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showForumsPage()">
+                            <i class="fa fa-comments"></i>Discussion Forum
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="container"><br><br><br>
+            <pre class="tab4">Select Year   Select Month</pre>
+            <div style="display:block;">
+
+                <select class="box" name="year" [(ngModel)]="userDetails.year">
+
+                    <option value={{year.value}} *ngFor="let year of years">{{year.viewValue}}</option>
+
+                </select>
+
+                <select class="box" name="month" [(ngModel)]="userDetails.month">
+                    Enter month<option value={{month.value}} *ngFor="let month of months">{{month.viewValue}}</option>
+                </select><br>
+            </div><br>
+
+            <form class="form-group" #myBill="ngForm" (ngSubmit)="saveBills(myBill)">
+                Enter Bill Name<input type="text" name="billName" [(ngModel)]="bills.billName" required
+                    class="form-control"><br />
+                Enter Due Date <input type="date" name="dueDate" [(ngModel)]="bills.dueDate" required
+                    class="form-control"><br />
+                Enter Amount<input type="number" name="amount" [(ngModel)]="bills.amount" required
+                    class="form-control"><br />
+
+            </form>
+
+            <button class="button button2" (click)="saveBills(myBill)" [disabled]="!myBill.valid">Save
+                Bills</button><br>
+            <button class="button button2" (click)="resetBill(myBill)">Reset Form</button>
+
+
+        </div>
+
+        <div class="image">
+            <img src="assets/hero-image.jpg" width="500px" height="300px">
+        </div>
+    </body>
+</section>

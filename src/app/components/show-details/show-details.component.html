@@ -1,0 +1,254 @@
+<section id="container">
+  <header class="header black-bg">
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" routerLink="/dashboard">
+            <span class="pe-7s-gleam bounce-in"></span>
+            <h1>BUDGET GURU</h1>
+          </a>
+        </div>
+        <div class="user-pic" *ngIf="authService.userData as user">
+          <div class="dropdown">
+              <span>
+                  <img class="align-self-start mr-5 img-thumbnail rounded-circle" width="45px" height="45px"
+                      src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+                      alt="{{user.displayName}}">
+              </span>
+              <div class="dropdown-content">
+                  <ul class="nav navbar-nav navbar-right">
+                      <li><a routerLink="/user-profile">Profile</a></li>
+                      <li><a class="pointer-link" (click)="authService.SignOut()">Log Out</a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      </div>
+    </nav>
+  </header>
+
+  <body>
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+
+          <li class="nav-item">
+            <a class="nav-link" (click)="showSaveDetailsPage()">
+              <i class="fas fa-save"></i>Save Details
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="showDetailsPage()">
+              <i class="fas fa-table"></i>Show Details
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="showBillsPage()">
+              <i class="fas fa-save"></i>Save Bills
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="showAnalysisPage()">
+              <i class="fa fa-bar-chart-o"></i>Yearly Analysis
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="showForumsPage()">
+              <i class="fa fa-comments"></i>Discussion Forum
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    
+    <div class="show">
+      
+      <form #details="ngForm">
+        <!--<p>Select Year</p>
+        <select name="year" [(ngModel)]="userData.year" required>
+
+
+          <option value={{year.value}} *ngFor="let year of years">{{year.viewValue}}</option>
+        </select>
+        <p>Select Month</p>
+        <select name="month" [(ngModel)]="userData.month" required>
+
+          <option value={{month.value}} *ngFor="let month of months">{{month.viewValue}}</option>
+        </select>
+        <br>-->
+        <pre class="tab4">Select Year   Select Month</pre>
+        <div style="display:block;">
+            
+            <select class="box" name="year" [(ngModel)]="userData.year">
+                
+                <option value={{year.value}} *ngFor="let year of years">{{year.viewValue}}</option>
+                
+            </select>
+            
+            <select class="box" name="month" [(ngModel)]="userData.month">
+                Enter month<option value={{month.value}} *ngFor="let month of months">{{month.viewValue}}</option>
+            </select><br>
+        </div><br>
+        <button class="button button2" (click)="showSavings()" [disabled]="!details.valid">Show Savings</button>
+        <button class="button button2" (click)="showExpenses()" [disabled]="!details.valid">Show Expenses</button>
+        <button class="button button2" (click)="showIncome()" [disabled]="!details.valid">Show Income</button>
+        <button class="button button2" (click)="calculateTotal()" [disabled]="!details.valid">Calculate Total</button>
+      </form>
+
+      <div *ngIf="savings; else elseBlock">
+
+        <table class="table table-bordered table-striped table-hover table-sm">
+          <thead>
+            <tr class="bg-info text-black">
+              <th>Year</th>
+              <th>Month</th>
+              <th>Investments</th>
+              <th>Emergency Funds</th>
+              <th>Others</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>{{userData.year}}</td>
+              <td>{{userData.month}}</td>
+              <td>{{savings.investments | currency : 'INR'}}</td>
+              <td>{{savings.emergencyFunds | currency :'INR'}}</td>
+              <td>{{savings.others | currency :'INR'}}</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+        <button class="button button2" (click)="showSavingsAnalysis()">Savings Analysis</button>
+        <div class="pie">
+          <canvas id="pieChart_savings"></canvas>
+        </div>
+      </div>
+      <ng-template #elseBlock>
+        Please select appropriate details.
+      </ng-template>
+      <div *ngIf=expenses>
+
+        <table class="table table-bordered table-striped table-hover table-sm">
+          <thead>
+            <tr class="bg-info text-black">
+              <th>Year</th>
+              <th>Month</th>
+              <th>Personal</th>
+              <th>Education</th>
+              <th>Shelter</th>
+              <th>Health</th>
+              <th>Transportation</th>
+              <th>Household</th>
+              <th>Clothing</th>
+              <th>Food</th>
+              <th>Miscellaneous</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>{{userData.year}}</td>
+              <td>{{userData.month}}</td>
+              <td>{{expenses.personal | currency : 'INR'}}</td>
+              <td>{{expenses.education | currency :'INR'}}</td>
+              <td>{{expenses.shelter | currency :'INR'}}</td>
+              <td>{{expenses.health | currency :'INR'}}</td>
+              <td>{{expenses.transportation | currency :'INR'}}</td>
+              <td>{{expenses.household | currency :'INR'}}</td>
+              <td>{{expenses.clothing | currency :'INR'}}</td>
+              <td>{{expenses.food | currency :'INR'}}</td>
+              <td>{{expenses.miscellaneous | currency :'INR'}}</td>
+
+            </tr>
+          </tbody>
+
+        </table>
+        <button class="button button2" (click)="showExpenseAnalysis()">Expense Analysis</button>
+        <div class="pie">
+          <canvas id="pieChart_expenses"></canvas>
+        </div>
+      </div>
+
+      <div *ngIf=income>
+
+        <table class="table table-bordered table-striped table-hover table-sm">
+          <thead>
+            <tr class="bg-info text-black">
+              <th>Year</th>
+              <th>Month</th>
+              <th>Salary</th>
+              <th>Grants</th>
+              <th>Refunds</th>
+              <th>Others</th>
+
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>{{userData.year}}</td>
+              <td>{{userData.month}}</td>
+              <td>{{income.salary | currency : 'INR'}}</td>
+              <td>{{income.grants | currency :'INR'}}</td>
+              <td>{{income.refunds | currency :'INR'}}</td>
+              <td>{{income.others | currency :'INR'}}</td>
+
+
+            </tr>
+          </tbody>
+
+        </table>
+        <button class="button button2" (click)="showIncomeAnalysis()">Income Analysis</button>
+        <div class="pie">
+
+
+          <canvas id="pieChart_income"></canvas>
+
+
+        </div>
+      </div>
+
+      <div *ngIf=total>
+        <h4>Report</h4>
+        <p style="color: green;">Total Savings : {{total.total_savings | currency : 'INR'}}</p>
+        <p style="color: red;">Total Expenses : {{total.total_expenses | currency : 'INR'}}</p>
+        <p style="color: green;">Total Income : {{total.total_income | currency : 'INR'}}</p>
+        
+        <div *ngIf="total.total_expenses > (total.total_income + total.total_savings)">
+          <div class="feedback">
+            <h5>Our Feedback</h5>
+            <img class="alert" src='assets/alert.jpg'>
+            
+            <p>Danger, you have a monthly shortage of <span style="color: red;"><strong>{{total.total_expenses - (total.total_income + total.total_savings) | currency : 'INR'}}</strong></span></p>
+          </div>
+          
+        </div>
+        <div *ngIf="total.total_expenses < (total.total_income + total.total_savings)">
+          <div class="feedback">
+            <h5>Our Feedback</h5>
+            <img class="alert" src='assets/green.jpg'>
+            
+            <p>A monthly surplus of <span style="color: green;"><strong>{{(total.total_income + total.total_savings) - total.total_expenses | currency : 'INR'}}?</strong></span> That’s Great... whoa, we’re almost speechless! </p>
+          </div>
+        </div>
+        <button class="button button2" (click)="showReport()">Show Report</button>
+        <div class="pie">
+
+
+          <canvas id="pieChart_total"></canvas>
+
+
+        </div>
+
+      </div>
+    </div>
+    
+  </body>
+</section>

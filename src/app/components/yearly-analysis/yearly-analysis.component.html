@@ -1,0 +1,184 @@
+<section id="container">
+    <header class="header black-bg">
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" routerLink="/dashboard">
+                        <span class="pe-7s-gleam bounce-in"></span>
+                        <h1>BUDGET GURU</h1>
+                    </a>
+                </div>
+                <div class="user-pic" *ngIf="authService.userData as user">
+                    <div class="dropdown">
+                        <span>
+                            <img class="align-self-start mr-5 img-thumbnail rounded-circle" width="45px" height="45px"
+                                src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+                                alt="{{user.displayName}}">
+                        </span>
+                        <div class="dropdown-content">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a routerLink="/user-profile">Profile</a></li>
+                                <li><a class="pointer-link" (click)="authService.SignOut()">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <body>
+
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu" id="nav-accordion">
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showSaveDetailsPage()">
+                            <i class="fas fa-save"></i>Save Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showDetailsPage()">
+                            <i class="fas fa-table"></i>Show Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showBillsPage()">
+                            <i class="fas fa-save"></i>Save Bills
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showAnalysisPage()">
+                            <i class="fa fa-bar-chart-o"></i>Yearly Analysis
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showForumsPage()">
+                            <i class="fa fa-comments"></i>Discussion Forum
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <div class="container">
+
+            <div class="bg-image"></div>
+            <div class="select-year">
+                <p>Select Year</p>
+                <select class="box" name="year" [(ngModel)]="userDetails.year">
+                    <option value={{year.value}} *ngFor="let year of years">{{year.viewValue}}</option>
+                </select><br><br>
+                <button class="button button2" (click)="showYearlyAnalysis()">Show Year Details</button>
+                <button class="button button2" (click)="showAnalysis()">Show Analysis</button>
+                <div *ngIf=total>
+                    <table id="bar">
+                        <tr>
+                            <th>Month</th>
+                            <th>Income</th>
+                            <th>Expense</th>
+                            <th>Saving</th>
+
+                        </tr>
+                        <tr>
+                            <td>January</td>
+                            <td>{{total.jan.total_income | currency : 'INR'}}</td>
+                            <td>{{total.jan.total_expenses | currency : 'INR'}}</td>
+                            <td>{{total.jan.total_savings | currency : 'INR'}}</td>
+
+                        </tr>
+                        <tr>
+                            <td>February</td>
+                            <td>{{total.feb.total_income | currency : 'INR'}}</td>
+                            <td>{{total.feb.total_expenses | currency : 'INR'}}</td>
+                            <td>{{total.feb.total_savings | currency : 'INR'}}</td>
+
+
+                        </tr>
+                        <tr>
+                            <td>March</td>
+                            <td>{{total.mar.total_income | currency : 'INR'}}</td>
+                            <td>{{total.mar.total_expenses | currency : 'INR'}}</td>
+                            <td>{{total.mar.total_savings | currency : 'INR'}}</td>
+
+
+                        </tr>
+                        <tr>
+                            <td>April</td>
+                            <td>{{total.apr.total_income | currency : 'INR'}}</td>
+                            <td>{{total.apr.total_expenses | currency : 'INR'}}</td>
+                            <td>{{total.apr.total_savings | currency : 'INR'}}</td>
+
+
+                        </tr>
+                        <tr>
+                            <td>May</td>
+                            <td>{{total.may.total_income | currency : 'INR'}}</td>
+                            <td>{{total.may.total_expenses | currency : 'INR'}}</td>
+                            <td>{{total.may.total_savings | currency : 'INR'}}</td>
+
+
+                        </tr>
+                        <tr>
+                            <td>June</td>
+                            <td>{{total.june.total_income | currency : 'INR'}}</td>
+                            <td>{{total.june.total_expenses | currency : 'INR'}}</td>
+                            <td>{{total.june.total_savings | currency : 'INR'}}</td>
+
+
+                        </tr>
+                        <tr>
+                            <td>July</td>
+                            <td>{{total.july.total_income | currency : 'INR'}}</td>
+                            <td>{{total.july.total_expenses | currency : 'INR'}}</td>
+                            <td>{{total.july.total_savings | currency : 'INR'}}</td>
+
+
+                        </tr>
+                        <tr>
+                            <td>August</td>
+                            <td>{{total.aug.total_income | currency : 'INR'}}</td>
+                            <td>{{total.aug.total_expenses | currency : 'INR'}}</td>
+                            <td>{{total.aug.total_savings | currency : 'INR'}}</td>
+
+
+                        </tr>
+                        <tr>
+                            <td>September</td>
+                            <td>{{total.sept.total_income | currency : 'INR'}}</td>
+                            <td>{{total.sept.total_expenses | currency : 'INR'}}</td>
+                            <td>{{total.sept.total_savings | currency : 'INR'}}</td>
+
+
+                        </tr>
+                        <tr>
+                            <td>October</td>
+                            <td>{{total.oct.total_income | currency : 'INR'}}</td>
+                            <td>{{total.oct.total_expenses | currency : 'INR'}}</td>
+                            <td>{{total.oct.total_savings | currency : 'INR'}}</td>
+
+                        </tr>
+                        <tr>
+                            <td>November</td>
+                            <td>{{total.nov.total_income | currency : 'INR'}}</td>
+                            <td>{{total.nov.total_expenses | currency : 'INR'}}</td>
+                            <td>{{total.nov.total_savings | currency : 'INR'}}</td>
+
+
+                        </tr>
+                        <tr>
+                            <td>December</td>
+                            <td>{{total.dec.total_income | currency : 'INR'}}</td>
+                            <td>{{total.dec.total_expenses | currency : 'INR'}}</td>
+                            <td>{{total.dec.total_savings | currency : 'INR'}}</td>
+                        </tr>
+                    </table>
+                    <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+
+                </div><br>
+
+            </div>
+        </div>
+
+    </body>
+</section>

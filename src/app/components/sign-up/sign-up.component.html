@@ -1,0 +1,99 @@
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" routerLink="/home">
+          <span class="pe-7s-gleam bounce-in"></span>
+          <h1> BUDGET GURU</h1>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <!--
+  <div class="icon-bar">
+    <a href="#"><i class="fa fa-user"></i></a>
+  </div>
+  <div class="displayTable">
+    <div class="displayTableCell">
+      <div class="authBlock">
+        <h3>Sign Up</h3>
+
+        <div class="formGroup">
+          <input type="email" class="formControl" placeholder="Email Address" #userEmail required>
+        </div>
+
+        <div class="formGroup">
+          <input type="password" class="formControl" placeholder="Password" #userPwd required>
+        </div>
+
+        <div class="formGroup">
+          <input type="button" class="btn btnPrimary" value="Sign Up"
+            (click)="authService.SignUp(userEmail.value, userPwd.value)">
+        </div>
+
+        <div class="formGroup">
+          <span class="or"><span class="orInner">Or</span></span>
+        </div>
+        <div class="formGroup">
+          <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">
+            <i class="fab fa-google-plus-g"></i>
+            Continue with Google
+          </button>
+        </div>
+
+      </div>
+
+      <div class="redirectToLogin">
+        <span>Already have an account? <span class="redirect" routerLink="/sign-in" style="color: black;">Log
+            In</span></span>
+      </div>
+    </div>
+
+  </div>
+-->
+  <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100 p-t-85 p-b-20">
+        <form class="login100-form validate-form">
+          <span class="login100-form-title p-b-70">
+            Sign Up
+          </span>
+
+          <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Enter username">
+            <input class="input100" type="email" #userEmail required>
+            <span class="focus-input100" data-placeholder="Email Address"></span>
+          </div>
+          <br>
+
+          <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
+            <input class="input100" type="password" #userPwd required>
+            <span class="focus-input100" data-placeholder="Password"></span>
+          </div>
+          <br>
+
+
+          <div class="container-login100-form-btn">
+            <input type="button" class="login100-form-btn" value="Sign Up"
+              (click)="authService.SignUp(userEmail.value, userPwd.value)">
+
+          </div>
+          <br>
+
+          <div class="container-login100-form-btn">
+            <button class="login101-form-btn" (click)="authService.GoogleAuth()">
+              <i class="fab fa-google-plus-g"></i>
+              Continue with Google
+            </button>
+          </div>
+          <br>
+          <div class="redirectToLogin">
+            <span>Already have an account? <span class="redirect" routerLink="/sign-in" style="color: white;">Log
+                In</span></span>
+          </div>
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</body>

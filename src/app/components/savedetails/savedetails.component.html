@@ -1,0 +1,353 @@
+<section id="container">
+    <header class="header black-bg">
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" routerLink="/dashboard">
+                        <span class="pe-7s-gleam bounce-in"></span>
+                        <h1>BUDGET GURU</h1>
+                    </a>
+                </div>
+                <div class="user-pic" *ngIf="authService.userData as user">
+                    <div class="dropdown">
+                        <span>
+                            <img class="align-self-start mr-5 img-thumbnail rounded-circle" width="45px" height="45px"
+                                src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+                                alt="{{user.displayName}}">
+                        </span>
+                        <div class="dropdown-content">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a routerLink="/user-profile">Profile</a></li>
+                                <li><a class="pointer-link" (click)="authService.SignOut()">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </nav>
+    </header>
+
+
+    <aside>
+        <div id="sidebar" class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu" id="nav-accordion">
+                <li class="nav-item">
+                    <a class="nav-link" (click)="showSaveDetailsPage()">
+                        <i class="fas fa-save"></i>Save Details
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="showDetailsPage()">
+                        <i class="fas fa-table"></i>Show Details
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="showBillsPage()">
+                        <i class="fas fa-save"></i>Save Bills
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="showAnalysisPage()">
+                        <i class="fa fa-bar-chart-o"></i>Yearly Analysis
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="showForumsPage()">
+                        <i class="fa fa-comments"></i>Discussion Forum
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+    <!--<button (click)="reset(mySavings,myIncome,myExpenses)">Reset Form</button>-->
+    
+    <div class="save">
+        <div class="heading">
+            <h5 style="color:#9561a8;"><strong>Monthly Budget Calculator</strong></h5>                     
+            <p>Building  a good budget is the key to managing your money. This free budget calculator  will give you a clear view of your monthly finances and help you find places to  change your budget to make the most of your income.</p>
+            
+        </div>
+        <pre class="tab4">Select Year   Select Month</pre>
+        <div style="display:block;">
+            
+            <select class="box" name="year" [(ngModel)]="userDetails.year">
+                
+                <option value={{year.value}} *ngFor="let year of years">{{year.viewValue}}</option>
+                
+            </select>
+            
+            <select class="box" name="month" [(ngModel)]="userDetails.month">
+                Enter month<option value={{month.value}} *ngFor="let month of months">{{month.viewValue}}</option>
+            </select><br>
+        </div><br>
+        
+
+        <form #mySavings="ngForm">
+            <button class="collapsible">
+                <h6>STEP 1: Enter Your Savings</h6><i>Start by entering your monthly savings in the sections below.
+                    Click the "+" buttons to expand them.</i>
+            </button>
+            <div class="content">
+                Enter Investments<input type="number"  name="investments" [(ngModel)]="savings.investments" required
+                    class="form-control"><br />
+                Enter Emergency Funds <input type="number" name="emergencyFunds" [(ngModel)]="savings.emergencyFunds"
+                    required class="form-control"><br />
+                Enter Other savings<input type="number" name="others" [(ngModel)]="savings.others" required
+                    class="form-control"><br />
+                <button class="button button2" (click)="saveSavings(mySavings)" [disabled]="!mySavings.valid">Save
+                    Savings</button>
+            </div>
+        </form><br>
+
+
+
+        <form class="form-group" #myIncome="ngForm">
+            <button class="collapsible">
+                <h6>STEP 2: Enter your Income</h6><i>Now enter your income in the sections below.</i>
+            </button>
+            <div class="content">
+                Enter Salary<input type="number" name="salary" [(ngModel)]="income.salary" required
+                    class="form-control"><br />
+                Enter Grants<input type="number" name="grants" [(ngModel)]="income.grants" required
+                    class="form-control"><br />
+                Enter Refunds<input type="number" name="refunds" [(ngModel)]="income.refunds" required
+                    class="form-control"><br />
+                Enter Others<input type="number" name="others" [(ngModel)]="income.others" required
+                    class="form-control"><br />
+                <button class="button button2" (click)="saveIncome(myIncome)" [disabled]="!myIncome.valid">Save
+                    Income</button>
+
+            </div>
+        </form><br>
+
+        <form class="form-group" #myExpenses="ngForm">
+            <button class="collapsible">
+                <h6>STEP 3: Enter your Expenses</h6><i>Now enter your expenses in the sections below.</i>
+            </button>
+            <div class="content">
+                Enter Personal<input type="number" name="personal" [(ngModel)]="expenses.personal" required
+                    class="form-control"><br />
+                Enter Education<input type="number" name="education" [(ngModel)]="expenses.education" required
+                    class="form-control"><br />
+                Enter Shelter<input type="number" name="shelter" [(ngModel)]="expenses.shelter" required
+                    class="form-control"><br />
+                Enter Health<input type="number" name="health" [(ngModel)]="expenses.health" required
+                    class="form-control"><br />
+                Enter Transportation<input type="number" name="transportation" [(ngModel)]="expenses.transportation"
+                    required class="form-control"><br />
+                Enter Household<input type="number" name="household" [(ngModel)]="expenses.household" required
+                    class="form-control"><br />
+                Enter Clothing<input type="number" name="clothing" [(ngModel)]="expenses.clothing" required
+                    class="form-control"><br />
+                Enter Food<input type="number" name="food" [(ngModel)]="expenses.food" required
+                    class="form-control"><br />
+                Enter Miscellaneous<input type="number" name="expenses.miscellaneous"
+                    [(ngModel)]="expenses.miscellaneous" required class="form-control"><br />
+                <button class="button button2" (click)="saveExpenses(myExpenses)" [disabled]="!myExpenses.valid">Save
+                    Expenses</button><br>
+
+            </div>
+
+        </form><br>
+        <button class="button button2" (click)="reset(mySavings,myIncome,myExpenses)">Reset Form</button>
+    </div>
+
+
+    <!--
+    <div class="select">
+        <div class="container"><br><br><br>
+            <p>Select Year</p>
+            <select name="year" [(ngModel)]="userDetails.year">
+                <option value={{year.value}} *ngFor="let year of years">{{year.viewValue}}</option>
+            </select>
+            <p>Select Month</p>
+            <select name="month" [(ngModel)]="userDetails.month">
+                Enter month<option value={{month.value}} *ngFor="let month of months">{{month.viewValue}}</option>
+            </select>
+            
+            <form #mySavings="ngForm">
+                <table id="t01">
+                    <tr>
+                        <th>Savings</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Enter Investments
+                        </td>
+                        <td><input type="number" name="investments" [(ngModel)]="savings.investments" required
+                                class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Enter Emergency Funds </td>
+                        <td><input type="number" name="emergencyFunds" [(ngModel)]="savings.emergencyFunds" required
+                                class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Enter Other savings</td>
+                        <td><input type="number" name="others" [(ngModel)]="savings.others" required
+                                class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button class="button button2" (click)="saveSavings(mySavings)"
+                                [disabled]="!mySavings.valid">Save Savings</button></td>
+                    </tr>
+
+                </table>
+            </form>
+            <form #myIncome="ngForm">
+                <table id="t02">
+                    <tr>
+
+                        <th>Income</th>
+
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Enter Salary
+                        </td>
+                        <td><input type="number" name="salary" [(ngModel)]="income.salary" required
+                                class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td> Enter Grants </td>
+                        <td><input type="number" name="grants" [(ngModel)]="income.grants" required
+                                class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Enter Refunds</td>
+                        <td><input type="number" name="refunds" [(ngModel)]="income.refunds" required
+                                class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Enter Others</td>
+                        <td><input type="number" name="others" [(ngModel)]="income.others" required
+                                class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button class="button button2" (click)="saveIncome(myIncome)"
+                                [disabled]="!myIncome.valid">Save Income</button></td>
+                    </tr>
+
+                </table>
+            </form>
+
+            <br>
+
+            <form #myExpenses="ngForm">
+                <table id="t03">
+                    <tr>
+                        <th>Expenses
+                        </th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Enter Personal</td>
+                        <td><input type="number" name="personal" [(ngModel)]="expenses.personal" required
+                                class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Enter Education</td>
+                        <td><input type="number" name="education" [(ngModel)]="expenses.education" required
+                                class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Enter Shelter</td>
+                        <td><input type="number" name="shelter" [(ngModel)]="expenses.shelter" required
+                                class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Enter Health</td>
+                        <td><input type="number" name="health" [(ngModel)]="expenses.health" required
+                                class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Enter Transportation</td>
+                        <td><input type="number" name="transportation" [(ngModel)]="expenses.transportation" required
+                                class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Enter Household</td>
+                        <td><input type="number" name="household" [(ngModel)]="expenses.household" required
+                                class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Enter Clothing</td>
+                        <td><input type="number" name="clothing" [(ngModel)]="expenses.clothing" required
+                                class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Enter Food</td>
+                        <td><input type="number" name="food" [(ngModel)]="expenses.food" required class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Enter Miscellaneous</td>
+                        <td><input type="number" name="miscellaneous" [(ngModel)]="expenses.miscellaneous" required
+                                class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button class="button button2" (click)="saveExpenses(myExpenses)"
+                                [disabled]="!myExpenses.valid">Save Expenses</button></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+    </div>
+-->
+    <!--
+    <p> Savings</p>
+
+    <form class="form-group">
+        Enter Investments<input type = "number" name="investments" [(ngModel)]="savings.investments" class="form-control"><br/>
+        Enter Emergency Funds <input type = "number" name="emergencyFunds" [(ngModel)]="savings.emergencyFunds" class="form-control"><br/>
+        Enter Other savings<input type = "number" name="others" [(ngModel)]="savings.others" class="form-control"><br/>
+        
+    </form>
+
+
+    <button (click) = "saveSavings()">Save Savings</button>
+    
+
+    <p> Income</p>
+
+    <form class="form-group">
+        Enter Salary<input type = "number" name="salary" [(ngModel)]="income.salary" class="form-control"><br/>
+        Enter Grants<input type = "number" name="grants" [(ngModel)]="income.grants" class="form-control"><br/>
+        Enter Refunds<input type = "number" name="refunds" [(ngModel)]="income.refunds" class="form-control"><br/>
+        Enter Others<input type = "number" name="others" [(ngModel)]="income.others" class="form-control"><br/>
+    </form>
+
+    <button (click) = "saveIncome()">Save Income</button>
+
+    <p>Expenses</p>
+
+    <form class="form-group">
+        Enter Personal<input type = "number" name="personal" [(ngModel)]="expenses.personal" class="form-control"><br/>
+        Enter Education<input type = "number" name="education" [(ngModel)]="expenses.education" class="form-control"><br/>
+        Enter Shelter<input type = "number" name="shelter" [(ngModel)]="expenses.shelter" class="form-control"><br/>
+        Enter Health<input type = "number" name="health" [(ngModel)]="expenses.health" class="form-control"><br/>
+        Enter Transportation<input type = "number" name="transportation" [(ngModel)]="expenses.transportation" class="form-control"><br/>
+        Enter Household<input type = "number" name="household" [(ngModel)]="expenses.household" class="form-control"><br/>
+        Enter Clothing<input type = "number" name="clothing" [(ngModel)]="expenses.clothing" class="form-control"><br/>
+        Enter Food<input type = "number" name="food" [(ngModel)]="expenses.food" class="form-control"><br/>
+        Enter Miscellaneous<input type = "number" name="expenses.miscellaneous" [(ngModel)]="income.others" class="form-control"><br/>
+    </form>
+
+    <button (click) = "saveExpenses()">Save Expenses</button>
+    -->
+
+
+</section>

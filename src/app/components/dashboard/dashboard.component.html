@@ -1,0 +1,157 @@
+<!-- Top navigation 
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  
+</nav>
+-->
+<!-- Sidebar navigation 
+<div class="container-fluid">
+  <div class="row">
+
+    <nav class="col-md-2 d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active">
+              <i class="fas fa-user"></i>User Profile
+            </a>
+          </li>-->
+<!-- Calling SignOut() Api from AuthService
+          <li class="nav-item">
+            <a class="nav-link" (click)="authService.SignOut()">
+              <i class="fas fa-sign-out-alt"></i>Log out
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="showDetailsPage()">
+              <i class="fas fa-sign-out-alt"></i>Show Details
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="showSaveDetailsPage()">
+              <i class="fas fa-sign-out-alt"></i>Save Details
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="showBillsPage()">
+              <i class="fas fa-sign-out-alt"></i>Save Bills
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+   -->
+<!-- Main content 
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="inner-adjust">
+
+        <div class="pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">User Profile</h1>
+        </div>-->
+<!-- Show user data when logged in 
+        
+        <div class="row" *ngIf="authService.userData as user">
+          <div class="col-md-12">
+            <div class="media">
+              <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+                alt="{{user.displayName}}">
+              <div class="media-body">
+                <h1>Hello: <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong></h1>
+                <p>User ID: <strong>{{user.uid}}</strong></p>
+                <p>Email: <strong>{{user.email}}</strong></p>
+                <p>Email Verified: <strong>{{user.emailVerified}}</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+</div>
+-->
+
+<body>
+
+  <section id="container">
+    <header class="header black-bg">
+      <nav class="navbar navbar-inverse">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" routerLink="/dashboard">
+              <span class="pe-7s-gleam bounce-in"></span>
+              <h1> BUDGET GURU</h1>
+            </a>
+          </div>
+          <div class="user-pic" *ngIf="authService.userData as user">
+            <div class="dropdown">
+              <span>
+                <img class="align-self-start mr-5 img-thumbnail rounded-circle" width="45px" height="45px"
+                  src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}" alt="{{user.displayName}}">
+
+              </span>
+              <div class="dropdown-content">
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a routerLink="/user-profile">Profile</a></li>
+                  <li><a class="pointer-link" (click)="authService.SignOut()">Log Out</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+
+        <ul class="sidebar-menu" id="nav-accordion">
+          <li class="nav-item">
+            <a class="nav-link" (click)="showSaveDetailsPage()">
+              <i class="fas fa-save"></i>Save Details
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="showDetailsPage()">
+              <i class="fas fa-table"></i>Show Details
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="showBillsPage()">
+              <i class="fas fa-save"></i>Save Bills
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="showAnalysisPage()">
+              <i class="fa fa-bar-chart-o"></i>Yearly Analysis
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="showForumsPage()">
+              <i class="fa fa-comments"></i>Discussion Forum
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="dashboard-content">
+      <p class="center"><strong>Worried about your finances? Budget Guru can help you find peace of mind!</strong>
+
+      </p>
+      <img src='assets/Budget-bg2.jpg' width="350px" height="300px" class="center">
+      <p class="center">A free budget plannig from Budget Guru can help you pay down debt, manage expenses, plan for the
+        future, and achieve financial peace of mind.</p>
+      <p class="center"><img src='assets/tick.jpg' width="30px" height="30px">Free Yearly Analysis...Navigate to Save
+        Details tab and enter your yearly details.</p>
+      <p class="center"><img src='assets/tick.jpg' width="30px" height="30px">Provides Monthly Analysis of Expenses,
+        Income, Savings...</p>
+      <p class="center"><img src='assets/tick.jpg' width="30px" height="30px">Save your Bills...We will remind you!</p>
+      <p class="center"><img src='assets/tick.jpg' width="30px" height="30px">Ask all your Budget related Questions in
+        our Forum...</p>
+    </div>
+
+  </section>
+
+
+</body>

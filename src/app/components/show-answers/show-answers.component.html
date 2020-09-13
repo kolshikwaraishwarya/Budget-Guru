@@ -1,0 +1,83 @@
+<section id="container">
+    <header class="header black-bg">
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" routerLink="/dashboard">
+                        <span class="pe-7s-gleam bounce-in"></span>
+                        <h1>BUDGET GURU</h1>
+                    </a>
+                </div>
+                <div class="user-pic" *ngIf="authService.userData as user">
+                    <div class="dropdown">
+                        <span>
+                            <img class="align-self-start mr-5 img-thumbnail rounded-circle" width="45px" height="45px"
+                                src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+                                alt="{{user.displayName}}">
+                        </span>
+                        <div class="dropdown-content">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a routerLink="/user-profile">Profile</a></li>
+                                <li><a class="pointer-link" (click)="authService.SignOut()">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <body>
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu" id="nav-accordion">
+
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showSaveDetailsPage()">
+                            <i class="fas fa-save"></i>Save Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showDetailsPage()">
+                            <i class="fas fa-table"></i>Show Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showBillsPage()">
+                            <i class="fas fa-save"></i>Save Bills
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showAnalysisPage()">
+                            <i class="fa fa-bar-chart-o"></i>Yearly Analysis
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showForumsPage()">
+                            <i class="fa fa-comments"></i>Discussion Forum
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <div class="answer">
+            <h2 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Answers</h2>
+
+            <p style="color: red;font-size: large;">{{question}}</p>
+            <form class="form-group" #myAnswer="ngForm">
+                 <textarea type="text" name="answer" rows="4" cols="50" [(ngModel)]="postDetails.answer" placeholder="Your Reply..." required></textarea>
+
+                <button (click)="postAnswer(myAnswer)" [disabled]=!myAnswer.valid>Reply</button>
+            </form>
+
+            <div class="container">
+                <div *ngFor="let ans of answers">
+                    <p id="rcorners2"><strong style="color: black;">{{ans.post_email}} </strong> <br><hr style="height:1px;color:gray;background-color:gray">
+                         {{ans.answer | titlecase}}</p>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</section>

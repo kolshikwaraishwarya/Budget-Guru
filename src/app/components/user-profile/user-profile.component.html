@@ -1,0 +1,186 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+
+<body>
+    <section id="container">
+        <header class="header black-bg">
+            <nav class="navbar navbar-inverse">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" routerLink="/dashboard">
+                            <span class="pe-7s-gleam bounce-in"></span>
+                            <h1> BUDGET GURU</h1>
+                        </a>
+                    </div>
+                    <div class="user-pic" *ngIf="authService.userData as user">
+                        <div class="dropdown">
+                            <span>
+                                <img class="align-self-start mr-5 img-thumbnail rounded-circle" width="45px"
+                                    height="45px" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+                                    alt="{{user.displayName}}">
+                            </span>
+                            <div class="dropdown-content">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a routerLink="/user-profile">Profile</a></li>
+                                    <li><a class="pointer-link" (click)="authService.SignOut()">Log Out</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu" id="nav-accordion">
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showSaveDetailsPage()">
+                            <i class="fas fa-save"></i>Save Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showDetailsPage()">
+                            <i class="fas fa-table"></i>Show Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showBillsPage()">
+                            <i class="fas fa-save"></i>Save Bills
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showAnalysisPage()">
+                            <i class="fa fa-bar-chart-o"></i>Yearly Analysis
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showForumsPage()">
+                            <i class="fa fa-comments"></i>Discussion Forum
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </section>
+    <div class="inner-adjust">
+        <div class="pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">User Profile</h1>
+        </div>
+        <div class="row" *ngIf="authService.userData as user">
+            <div class="col-md-12">
+                <div class="media">
+                    <img class="align-self-start mr-5 img-thumbnail rounded-circle" width="45px" height="45px"
+                        src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}" alt="{{user.displayName}}"
+                        style="float: left;">
+                    <div class="media-body">
+                        <p>Hello: <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong></p>
+                        <p>User ID: <strong>{{user.uid}}</strong></p>
+                        <p>Email: <strong>{{user.email}}</strong></p>
+
+                        <button class="button button2" (click)="yourQuestions()">My Questions</button>
+                        <button class="button button2" (click)="yourAnswers()">My Answers</button>
+
+                        <div class="container" *ngIf=questions>
+                            <div class="modal fade" id="editQuestionModel">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+
+
+                                            <form class="form-group">
+                                                Edit your Question<textarea type="text" name="question" rows="4" cols="50"
+                                                    [(ngModel)]="editQuestionDetails.editQuestion" class="form-control"></textarea>
+                                                <span class="close" data-dismiss="modal">&times;</span><br />
+                                                <button class="btn btn-primary btn-sm" data-dismiss="modal"
+                                                    (click)="updateQuestion()">Update</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="questions" *ngIf=questions?.length>
+                                <table id="customers">
+                                    <thead>
+                                        <tr class="bg-info text-black">
+                                            <th>Question</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor='let question of questions'>
+                                            <td>{{question | titlecase }}</td>
+
+                                            <td align=center>
+                                                <button class="glyphicon glyphicon-pencil"
+                                                    (click)="showEditPopup(question)"></button>
+                                            </td>
+                                            <td align=center>
+                                                <button (click)="deleteQuestion(question)"
+                                                    class="glyphicon glyphicon-trash"></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="container" *ngIf=answers?.length>
+                            <div class="modal fade" id="editAnswerModel">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+
+
+                                            <form class="form-group">
+                                                Edit your Answer<textarea type="text" name="answer" rows="4" cols="50"
+                                                    [(ngModel)]="editAnswerDetails.editAnswer" class="form-control"></textarea>
+                                                <span class="close" data-dismiss="modal">&times;</span><br />
+                                                <button class="btn btn-primary btn-sm" data-dismiss="modal"
+                                                    (click)="updateAnswer()">Update</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="answers" *ngIf=answers>
+
+                                <table id="customers">
+                                    <thead>
+                                        <tr class="bg-info text-black">
+                                            <th>Answers</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor='let answer of answers'>
+                                            <td>{{answer | titlecase }}</td>
+
+                                            <td align=center>
+                                                <button class="glyphicon glyphicon-pencil"
+                                                    (click)="showEditAnsPopup(answer)"></button>
+                                            </td>
+                                            <td align=center>
+                                                <button (click)="deleteAnswer(answer)"
+                                                    class="glyphicon glyphicon-trash"></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

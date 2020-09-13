@@ -1,0 +1,128 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+
+
+<section id="container">
+    <header class="header black-bg">
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" routerLink="/dashboard">
+                        <span class="pe-7s-gleam bounce-in"></span>
+                        <h1>BUDGET GURU</h1>
+                    </a>
+                </div>
+                <div class="user-pic" *ngIf="authService.userData as user">
+                    <div class="dropdown">
+                        <span>
+                            <img class="align-self-start mr-5 img-thumbnail rounded-circle" width="45px" height="45px"
+                                src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+                                alt="{{user.displayName}}">
+                        </span>
+                        <div class="dropdown-content">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a routerLink="/user-profile">Profile</a></li>
+                                <li><a class="pointer-link" (click)="authService.SignOut()">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <body>
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu" id="nav-accordion">
+
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showSaveDetailsPage()">
+                            <i class="fas fa-save"></i>Save Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showDetailsPage()">
+                            <i class="fas fa-table"></i>Show Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showBillsPage()">
+                            <i class="fas fa-save"></i>Save Bills
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showAnalysisPage()">
+                            <i class="fa fa-bar-chart-o"></i>Yearly Analysis
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="showForumsPage()">
+                            <i class="fa fa-comments"></i>Discussion Forum
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <div class="content">
+            <div style="margin-left: 30px;">
+            <h2
+                style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                Forums</h2><br>
+            <!--<form class="form-group" #myQuestion="ngForm">
+                Post a question : <input type="text" name="question" [(ngModel)]="questionDetails.question" required>
+
+                <button (click)="post()" [disabled]=!myQuestion.valid>Post</button>
+            </form>-->
+            <button type="button" class="button button2" (click)="showPostPopup()">Post Question</button></div>
+        
+            <div class="content-data">
+            <select name="title" [(ngModel)]="questionTitle" required>
+                <option value={{title}} *ngFor="let title of titles">{{title |titlecase}}</option>
+            </select>
+            <button class="button button2" (click) = "getQuestionByTitle()">Search</button></div>
+            <!--<div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Search
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <a (click) = "getQuestionByTitle()"><option class="dropdown-item" value={{title}} *ngFor="let title of titles">{{title |titlecase}}</option></a>
+                </div>
+              </div>-->
+          <br>  
+            <div class="modal fade" id="postModel" style="padding-top:20px ;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <form class="form-group" #myQuestion="ngForm">
+                                Enter title : <input type="text" name="question"  [(ngModel)]="questionDetails.title"
+                                    required><br>
+                                Post a question : <textarea type="text" name="question" rows="4" cols="50"
+                                    [(ngModel)]="questionDetails.question" required></textarea>
+
+
+                                <button (click)="post(myQuestion)" [disabled]=!myQuestion.valid>Post</button>
+                                <span class="close" data-dismiss="modal">&times;</span><br />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container">
+                <div class="container" *ngFor="let ques of questions">
+
+                    <p id="rcorners2"><strong style="color: black;">{{ques.email}}</strong><br><hr style="height:1px;color:gray;background-color:gray">
+                        {{ques.question | titlecase}}<br>
+                        <button class="button1 button2" (click)="showAnswers(ques.questionId,ques.email,ques.question)">Show Answers</button>
+                    </p>
+                </div>
+            </div>
+        
+        </div>
+    </body>
+</section>
